@@ -26,7 +26,6 @@ require (
 	github.com/eapache/channels v1.1.0 // indirect
 	github.com/eapache/queue v0.0.0-20180227141424-093482f3f8ce // indirect
 	github.com/go-ole/go-ole v1.2.4 // indirect
-	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/influxdata/influxdb v0.0.0-20190102202943-dd481f35df2c // indirect
 	github.com/influxdata/platform v0.0.0-20190117200541-d500d3cf5589 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
@@ -60,5 +59,7 @@ replace (
 )
 
 replace github.com/dgrijalva/jwt-go => github.com/golang-jwt/jwt/v4 v4.4.2
+
+replace github.com/gogo/protobuf => github.com/gogo/protobuf v1.3.2
 
 replace github.com/projectcalico/libcalico-go => ../libcalico-go
