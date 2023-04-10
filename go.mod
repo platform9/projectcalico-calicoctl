@@ -23,11 +23,13 @@ require (
 
 require (
 	github.com/StackExchange/wmi v0.0.0-20181212234831-e0a55b97c705 // indirect
+	github.com/armon/go-radix v1.0.0 // indirect
 	github.com/eapache/channels v1.1.0 // indirect
 	github.com/eapache/queue v0.0.0-20180227141424-093482f3f8ce // indirect
 	github.com/go-ole/go-ole v1.2.4 // indirect
-	github.com/influxdata/influxdb v0.0.0-20190102202943-dd481f35df2c // indirect
-	github.com/influxdata/platform v0.0.0-20190117200541-d500d3cf5589 // indirect
+	github.com/imdario/mergo v0.3.6 // indirect
+	github.com/influxdata/influxdb v1.7.6 // indirect
+	github.com/mattn/go-runewidth v0.0.3 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/vishvananda/netlink v0.0.0-20180501223456-f07d9d5231b9 // indirect
 	github.com/vishvananda/netns v0.0.0-20180720170159-13995c7128cc // indirect
