@@ -72,4 +72,6 @@ replace golang.org/x/text => golang.org/x/text v0.3.8
 
 replace golang.org/x/net => golang.org/x/net v0.7.0
 
+replace github.com/satori/go.uuid => github.com/google/uuid v1.3.0
+
 replace github.com/projectcalico/libcalico-go => ../libcalico-go
