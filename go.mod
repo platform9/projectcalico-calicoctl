@@ -68,4 +68,6 @@ replace github.com/gogo/protobuf => github.com/gogo/protobuf v1.3.2
 
 replace golang.org/x/crypto => golang.org/x/crypto v0.0.0-20220314234659-1baeb1ce4c0b
 
+replace golang.org/x/text => golang.org/x/text v0.3.8
+
 replace github.com/projectcalico/libcalico-go => ../libcalico-go
