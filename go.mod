@@ -27,7 +27,6 @@ require (
 	github.com/eapache/channels v1.1.0 // indirect
 	github.com/eapache/queue v0.0.0-20180227141424-093482f3f8ce // indirect
 	github.com/go-ole/go-ole v1.2.4 // indirect
-	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/imdario/mergo v0.3.6 // indirect
 	github.com/influxdata/influxdb v1.7.6 // indirect
 	github.com/mattn/go-runewidth v0.0.3 // indirect
@@ -73,4 +72,4 @@ replace golang.org/x/text => golang.org/x/text v0.3.8
 
 replace golang.org/x/net => golang.org/x/net v0.7.0
 
-//replace github.com/projectcalico/libcalico-go => ../libcalico-go
+replace github.com/projectcalico/libcalico-go => ../libcalico-go
