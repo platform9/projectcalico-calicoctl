@@ -1,5 +1,5 @@
 PACKAGE_NAME=github.com/projectcalico/calicoctl
-GO_BUILD_VER=v0.49
+GO_BUILD_VER=v0.72.1
 
 SEMAPHORE_PROJECT_ID?=$(SEMAPHORE_CALICOCTL_PROJECT_ID)
 
@@ -93,6 +93,7 @@ bin/calicoctl-%: $(LOCAL_BUILD_DEP) $(SRC_FILES)
 build-calicoctl:
 	mkdir -p bin
 	$(DOCKER_RUN) \
+	-v $(CURDIR)/../libcalico-go:/go/src/github.com/projectcalico/libcalico-go:rw \
 	  -e CALICOCTL_GIT_REVISION=$(CALICOCTL_GIT_REVISION) \
 	  -v $(CURDIR)/bin:/go/src/$(PACKAGE_NAME)/bin \
 	  $(CALICO_BUILD) \
@@ -105,12 +106,13 @@ bin/calicoctl-windows-amd64.exe: bin/calicoctl-windows-amd64
 
 gen-crds: remote-deps
 	$(DOCKER_RUN) \
+	  -v $(CURDIR)/../libcalico-go:/go/src/github.com/projectcalico/libcalico-go:rw
 	  -v $(CURDIR)/calicoctl/commands/crds:/go/src/$(PACKAGE_NAME)/calicoctl/commands/crds \
 	  $(CALICO_BUILD) \
 	  sh -c 'cd /go/src/$(PACKAGE_NAME)/calicoctl/commands/crds && go generate'
 
 remote-deps: mod-download	
-	$(DOCKER_RUN) $(CALICO_BUILD) sh -ec ' \
+	$(DOCKER_RUN) -v $(CURDIR)/../libcalico-go:/go/src/github.com/projectcalico/libcalico-go:rw $(CALICO_BUILD) sh -ec ' \
 		$(GIT_CONFIG_SSH) \
 		cp -r `go list -m -f "{{.Dir}}" github.com/projectcalico/libcalico-go`/config .; \
 		chmod -R +w config/'
@@ -210,7 +212,7 @@ sub-tag-images-%:
 .PHONY: ut
 ## Run the tests in a container. Useful for CI, Mac dev.
 ut: $(LOCAL_BUILD_DEP) bin/calicoctl-linux-amd64
-	$(DOCKER_RUN) $(CALICO_BUILD) sh -c 'cd /go/src/$(PACKAGE_NAME) && ginkgo -cover -r calicoctl/*'
+	$(DOCKER_RUN) -v $(CURDIR)/../libcalico-go:/go/src/github.com/projectcalico/libcalico-go:rw $(CALICO_BUILD) sh -c 'cd /go/src/$(PACKAGE_NAME) && ginkgo -cover -r calicoctl/*'
 
 ###############################################################################
 # FVs
@@ -223,7 +225,7 @@ fv: $(LOCAL_BUILD_DEP) bin/calicoctl-linux-amd64
 	$(MAKE) run-kubernetes-master KUBE_APISERVER_PORT=8080 KUBE_MOCK_NODE_MANIFEST=mock-node.yaml
 	$(MAKE) run-kubernetes-master KUBE_APISERVER_PORT=8082 KUBE_MOCK_NODE_MANIFEST=mock-node-second.yaml
 	# Run the tests
-	$(DOCKER_RUN) $(CALICO_BUILD) sh -c 'cd /go/src/$(PACKAGE_NAME) && go test ./tests/fv'
+	$(DOCKER_RUN) -v $(CURDIR)/../libcalico-go:/go/src/github.com/projectcalico/libcalico-go:rw $(CALICO_BUILD) sh -c 'cd /go/src/$(PACKAGE_NAME) && go test ./tests/fv'
 	# Cleanup
 	$(MAKE) stop-etcd
 	$(MAKE) stop-kubernetes-master KUBE_APISERVER_PORT=8080
@@ -251,6 +253,7 @@ st: bin/calicoctl-linux-amd64
 	#   - This also provides access to calicoctl and the docker client
 	docker run --net=host --privileged \
 		   -e MY_IP=$(LOCAL_IP_ENV) \
+		   -v $(CURDIR)/../libcalico-go:/go/src/github.com/projectcalico/libcalico-go:rw \
 		   --rm -t \
 		   -v $(CURDIR):/code \
 		   -v /var/run/docker.sock:/var/run/docker.sock \
